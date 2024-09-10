@@ -1,0 +1,7 @@
+C:\Users\prach\Documents\personalProjects\PearFiction\SlotMachin\bin\Debug\SlotMachin.exe.config
+C:\Users\prach\Documents\personalProjects\PearFiction\SlotMachin\bin\Debug\SlotMachin.exe
+C:\Users\prach\Documents\personalProjects\PearFiction\SlotMachin\bin\Debug\SlotMachin.pdb
+C:\Users\prach\Documents\personalProjects\PearFiction\SlotMachin\obj\Debug\SlotMachin.csproj.AssemblyReference.cache
+C:\Users\prach\Documents\personalProjects\PearFiction\SlotMachin\obj\Debug\SlotMachin.csproj.CoreCompileInputs.cache
+C:\Users\prach\Documents\personalProjects\PearFiction\SlotMachin\obj\Debug\SlotMachin.exe
+C:\Users\prach\Documents\personalProjects\PearFiction\SlotMachin\obj\Debug\SlotMachin.pdb
