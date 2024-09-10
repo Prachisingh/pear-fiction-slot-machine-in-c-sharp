@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExtendedNumerics;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +11,13 @@ namespace SlotMachin
     internal class WinData
     {
 
-        public List<int> posList { get; set; }
-        public string symbolName { get; set; }
-        public float winAmount { get; set; }
+        public List<int> PosList { get; set; }
+        public string SymbolName { get; set; }
+        public BigDecimal WinAmount { get; set; } = BigDecimal.Zero;
 
-        public int ways { get; set; }
-        public float basePayout{ get; set; }
+        public int Ways { get; set; }
+        public BigDecimal BasePayout { get; set; }
 
-        public Hashtable symCountOnEachCol = new Hashtable();
+        public Dictionary<int, int> SymCountOnEachCol = new Dictionary<int, int>();
     }
 }

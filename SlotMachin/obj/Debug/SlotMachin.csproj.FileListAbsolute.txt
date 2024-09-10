@@ -5,3 +5,13 @@ C:\Users\prach\Documents\personalProjects\PearFiction\SlotMachin\obj\Debug\SlotM
 C:\Users\prach\Documents\personalProjects\PearFiction\SlotMachin\obj\Debug\SlotMachin.csproj.CoreCompileInputs.cache
 C:\Users\prach\Documents\personalProjects\PearFiction\SlotMachin\obj\Debug\SlotMachin.exe
 C:\Users\prach\Documents\personalProjects\PearFiction\SlotMachin\obj\Debug\SlotMachin.pdb
+C:\Users\prach\Documents\personalProjects\pear-fiction-slot-machine-in-c-sharp\SlotMachin\bin\Debug\SlotMachin.exe.config
+C:\Users\prach\Documents\personalProjects\pear-fiction-slot-machine-in-c-sharp\SlotMachin\bin\Debug\SlotMachin.exe
+C:\Users\prach\Documents\personalProjects\pear-fiction-slot-machine-in-c-sharp\SlotMachin\bin\Debug\SlotMachin.pdb
+C:\Users\prach\Documents\personalProjects\pear-fiction-slot-machine-in-c-sharp\SlotMachin\obj\Debug\SlotMachin.csproj.AssemblyReference.cache
+C:\Users\prach\Documents\personalProjects\pear-fiction-slot-machine-in-c-sharp\SlotMachin\obj\Debug\SlotMachin.csproj.CoreCompileInputs.cache
+C:\Users\prach\Documents\personalProjects\pear-fiction-slot-machine-in-c-sharp\SlotMachin\obj\Debug\SlotMachin.exe
+C:\Users\prach\Documents\personalProjects\pear-fiction-slot-machine-in-c-sharp\SlotMachin\obj\Debug\SlotMachin.pdb
+C:\Users\prach\Documents\personalProjects\pear-fiction-slot-machine-in-c-sharp\SlotMachin\bin\Debug\ExtendedNumerics.BigDecimal.dll
+C:\Users\prach\Documents\personalProjects\pear-fiction-slot-machine-in-c-sharp\SlotMachin\bin\Debug\ExtendedNumerics.BigDecimal.xml
+C:\Users\prach\Documents\personalProjects\pear-fiction-slot-machine-in-c-sharp\SlotMachin\obj\Debug\SlotMachin.csproj.Up2Date

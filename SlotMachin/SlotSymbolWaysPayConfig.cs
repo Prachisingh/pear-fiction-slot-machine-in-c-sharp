@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExtendedNumerics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,31 +10,31 @@ namespace SlotMachin
     internal class SlotSymbolWaysPayConfig
     {
 
-        public int minimumMatch { get; set; }
+        public int MinimumMatch { get; set; } 
 
-        public List<float> winAmounts { get; set; }
+        public List<BigDecimal> WinAmounts { get; set; }
 
-        public SlotSymbolWaysPayConfig(int minimumMatch, List<float> winAmounts)
+        public SlotSymbolWaysPayConfig(int minimumMatch, List<BigDecimal> winAmounts)
         {
-            this.minimumMatch = minimumMatch;
-            this.winAmounts = winAmounts;
+            this.MinimumMatch = minimumMatch;
+            this.WinAmounts = winAmounts;
         }
 
-        public float getWinAmount(int matchedColumnsCount)
+        public BigDecimal GetWinAmount(int matchedColumnsCount)
         {
-            if (matchedColumnsCount < minimumMatch) return 0f;
+            if (matchedColumnsCount < MinimumMatch) return 0f;
 
-            if (matchedColumnsCount - minimumMatch == 0)
+            if (matchedColumnsCount - MinimumMatch == 0)
             {
-                return winAmounts[0];
+                return WinAmounts[0];
             }
-            else if (matchedColumnsCount - minimumMatch == 1)
+            else if (matchedColumnsCount - MinimumMatch == 1)
             {
-                return winAmounts[1];
+                return WinAmounts[1];
             }
             else
             {
-                return winAmounts[2];
+                return WinAmounts[2];
             }
         }
     }

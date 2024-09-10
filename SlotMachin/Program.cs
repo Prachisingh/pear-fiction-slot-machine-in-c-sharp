@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExtendedNumerics;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -25,7 +26,7 @@ namespace SlotMachin
 
             Random rng = new Random();
 
-            List<String[]> slotFace = new List<string[]>(5);
+            List<string[]> slotFace = new List<string[]>(5);
 
             int stopPos;
             foreach (string[] reel in bgReelsA)
@@ -35,11 +36,11 @@ namespace SlotMachin
                 stopPosition.Add(stopPos);
                 slotFace.Add(slotFaceReel);
             }
-            Console.Write("Stop Positions:");  
-            for (int i = 0; i < stopPosition.Count; i++)
-            {
-                Console.Write(stopPosition[i]+",");
-            }
+            Console.Write("Stop Positions: " + string.Join("-", stopPosition));  
+            //for (int i = 0; i < stopPosition.Count; i++)
+            //{
+            //    Console.Write(stopPosition[i]+",");
+            //}
             Console.WriteLine();
             Console.WriteLine("Screen:");
             for (int row = 0; row < 3; row++)
@@ -67,7 +68,7 @@ namespace SlotMachin
 
         private static void calculateWin(List<string[]> slotFace, int stake, int boardHeight, int boardWidth)
         {
-            float totalWin = 0f;
+            BigDecimal totalWin = BigDecimal.Zero;
             List<WinData> winDataList = new List<WinData>();
             
             for (int row = 0; row < boardHeight; row++)
@@ -77,7 +78,7 @@ namespace SlotMachin
                 bool exists = false; //exit if the symbol is already compared
                 foreach (WinData symbol in winDataList)
                 {
-                    if(symbol.symbolName == symToCompare)
+                    if(symbol.SymbolName == symToCompare)
                     {
                         exists = true;
                     }
@@ -90,28 +91,26 @@ namespace SlotMachin
                 }
 
                 WinData winData = checkForWinCombination(symToCompare, boardHeight, boardWidth, slotFace);
-                populateWin(winData, winDataList, stake);
-                if (winData.winAmount != 0)
+                populateWin(winData, stake);
+                if (winData.WinAmount != 0)
                 {
-                    totalWin += winData.winAmount;                    
+                    totalWin += winData.WinAmount;
+                    winDataList.Add(winData);
                 }
             }
-            Console.WriteLine("Total wins:" + totalWin);
+            Console.WriteLine("Total wins: " + totalWin);
 
             foreach (WinData win in winDataList)
             {
 
                 Console.Write("- Ways win "); 
 
-                for (int i = 0; i < win.posList.Count; i++)
+                for (int i = 0; i < win.PosList.Count; i++)
                 {
-                    Console.Write(win.posList[i] + "-");
+                    Console.Write(win.PosList[i] + "-");
                 }
-                Console.Write(" " + win.symbolName + " X" + win.symCountOnEachCol.Count + ", " + win.winAmount + ", Ways: " + win.ways+" ");
+                Console.Write(" " + win.SymbolName + " X" + win.SymCountOnEachCol.Count + ", " + win.WinAmount + ", Ways: " + win.Ways+" ");
             }
-
-
-
 
         }
 
@@ -121,7 +120,7 @@ namespace SlotMachin
 
             WinData winData = new WinData();
             List<int> posList = new List<int>();
-            Hashtable symCountPerColMap = new Hashtable();
+            Dictionary<int, int> symCountPerColMap = new Dictionary<int, int>();
             int currentCol = 0;
 
             for (int col = 0; col < boardWidth; col++)
@@ -156,52 +155,52 @@ namespace SlotMachin
                     pos += 5;
                 }
             }
-            winData.posList = posList;
-            winData.symCountOnEachCol = symCountPerColMap;
-            winData.symbolName = symToCompare;
+            winData.PosList = posList;
+            winData.SymCountOnEachCol = symCountPerColMap;
+            winData.SymbolName = symToCompare;
             return winData;
         }
 
-        private static void populateWin(WinData winData, List<WinData> winDataList, int stake)
+        private static void populateWin(WinData winData, int stake)
         {
-            SlotSymbolWaysPayConfig payOut = (SlotSymbolWaysPayConfig)getPayout()[winData.symbolName];
-            float symbolWin;
+            SlotSymbolWaysPayConfig payOut = (SlotSymbolWaysPayConfig)getPayout()[winData.SymbolName];
+            BigDecimal symbolWin;
             int ways;
-            if (payOut != null && winData.symCountOnEachCol.Count >= payOut.minimumMatch)
+            if (payOut != null && winData.SymCountOnEachCol.Count >= payOut.MinimumMatch)
             {
-                symbolWin = payOut.getWinAmount(winData.symCountOnEachCol.Count);
+                symbolWin = payOut.GetWinAmount(winData.SymCountOnEachCol.Count);
 
                 ways = 1;
 
-                for (int i = 0; i<winData.symCountOnEachCol.Count; i++) {
-                    ways *= (int)winData.symCountOnEachCol[i];
+                for (int i = 0; i<winData.SymCountOnEachCol.Count; i++) {
+                    ways *= (int)winData.SymCountOnEachCol[i];
                 }
 
-                float finalWin = symbolWin * ways;
-                winData.winAmount = finalWin * stake;
-                winData.ways = ways;
-                winData.basePayout = symbolWin;
-                winDataList.Add(winData);
+                BigDecimal finalWin = symbolWin * ways;
+                winData.WinAmount = finalWin * stake;
+                winData.Ways = ways;
+                winData.BasePayout = symbolWin;
+                
             }
         }
 
-        private static Hashtable getPayout()
+        private static Dictionary<string, SlotSymbolWaysPayConfig> getPayout()
         {
 
-            Hashtable payTable = new Hashtable();
+            Dictionary<string, SlotSymbolWaysPayConfig> payTable = new Dictionary<string, SlotSymbolWaysPayConfig>();
 
-            payTable.Add("sym1", new SlotSymbolWaysPayConfig(3, new List<float> { 1, 2, 3 }));
-            payTable.Add("sym2", new SlotSymbolWaysPayConfig(3, new List<float> { 1, 2, 3 }));
-
-            payTable.Add("sym3", new SlotSymbolWaysPayConfig(3, new List<float> { 1, 2, 5 }));
-
-            payTable.Add("sym4", new SlotSymbolWaysPayConfig(3, new List<float> { 2, 5, 10 }));
-
-            payTable.Add("sym5", new SlotSymbolWaysPayConfig(3, new List<float> { 5, 10, 15 }));
-            payTable.Add("sym6", new SlotSymbolWaysPayConfig(3, new List<float> { 5, 10, 15 }));
-
-            payTable.Add("sym7", new SlotSymbolWaysPayConfig(3, new List<float> { 5, 10, 20 }));
-            payTable.Add("sym8", new SlotSymbolWaysPayConfig(3, new List<float> { 10, 20, 50 }));
+            payTable.Add("sym1", new SlotSymbolWaysPayConfig(3, new List<BigDecimal> { 1, 2, 3 }));
+            payTable.Add("sym2", new SlotSymbolWaysPayConfig(3, new List<BigDecimal> { 1, 2, 3 }));
+                                                                         
+            payTable.Add("sym3", new SlotSymbolWaysPayConfig(3, new List<BigDecimal> { 1, 2, 5 }));
+                                                                         
+            payTable.Add("sym4", new SlotSymbolWaysPayConfig(3, new List<BigDecimal> { 2, 5, 10 }));
+                                                                         
+            payTable.Add("sym5", new SlotSymbolWaysPayConfig(3, new List<BigDecimal> { 5, 10, 15 }));
+            payTable.Add("sym6", new SlotSymbolWaysPayConfig(3, new List<BigDecimal> { 5, 10, 15 }));
+                                                                         
+            payTable.Add("sym7", new SlotSymbolWaysPayConfig(3, new List<BigDecimal> { 5, 10, 20 }));
+            payTable.Add("sym8", new SlotSymbolWaysPayConfig(3, new List<BigDecimal> { 10, 20, 50 }));
 
             return payTable;
         }
